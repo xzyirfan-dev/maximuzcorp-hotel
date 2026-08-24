@@ -1,6 +1,6 @@
 {
   "name": "Maximuz Hotel Management System",
-  "description": "Enterprise Property Management System (PMS) and Hotel ERP featuring multi-department coordination, tape chart room rack, guest CRM, revenue management, and AI operations.",
+  "description": "MaximuzCorp - Grub Enterprise Property Management System (PMS) & Hotel ERP with Indonesian WIB operations, abstract luxury hotel architecture silhouette, multi-department coordination, room tape chart, and AI intelligence.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -6,13 +6,13 @@ import {
   Plus, 
   Moon, 
   Bell, 
-  Clock, 
   Building,
   CheckCircle2,
   AlertTriangle
 } from "lucide-react";
 import { useHotel } from "../context/HotelContext";
 import { LanguageSelector } from "./LanguageSelector";
+import { WibClockBadge } from "./WibClockBadge";
 
 export const Header: React.FC<{ 
   onOpenMobileMenu: () => void;
@@ -52,37 +52,43 @@ export const Header: React.FC<{
   const urgentHk = housekeepingTasks.filter(t => t.priority === "URGENT" && t.status !== "COMPLETED" && t.status !== "VERIFIED");
 
   return (
-    <header className="sticky top-0 z-30 bg-[#fcfbf9]/90 backdrop-blur-md border-b border-[#e8e4dc] px-4 lg:px-6 py-2.5 flex items-center justify-between">
+    <header className="sticky top-0 z-30 bg-[#fcfbf9]/95 backdrop-blur-md border-b border-[#e8e4dc] px-3 sm:px-6 py-2.5 flex items-center justify-between">
       {/* Left: Breadcrumbs & Mobile Trigger */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         <button
           onClick={onOpenMobileMenu}
-          className="p-1.5 rounded-md hover:bg-stone-200/60 lg:hidden text-stone-700 cursor-pointer"
+          className="p-1.5 rounded-lg hover:bg-stone-200/60 lg:hidden text-stone-700 cursor-pointer"
           aria-label="Open Mobile Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div>
-          <div className="flex items-center gap-2 text-xs text-stone-600 font-medium">
-            <span className="flex items-center gap-1 text-stone-600">
-              <Building className="w-3.5 h-3.5 text-[#27523d]" /> Maximuz Grand Heritage
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-stone-600 font-medium">
+            <span className="flex items-center gap-1 text-stone-700 font-semibold truncate max-w-[140px] sm:max-w-none">
+              <Building className="w-3.5 h-3.5 text-[#27523d] shrink-0" /> Maximuz Grand Heritage
             </span>
-            <span>/</span>
-            <span className="text-stone-900 font-semibold">{currentInfo.title}</span>
+            <span className="text-stone-400">/</span>
+            <span className="text-stone-900 font-bold truncate max-w-[120px] sm:max-w-none">{currentInfo.title}</span>
           </div>
-          <p className="text-[11px] text-stone-600 hidden sm:block truncate max-w-md">
+          <p className="text-[11px] text-stone-500 hidden md:block truncate max-w-md">
             {currentInfo.subtitle}
           </p>
         </div>
       </div>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-2 sm:gap-2.5">
+      <div className="flex items-center gap-1.5 sm:gap-2.5">
+        {/* Real-time Indonesian WIB Clock & Shift Tracker Badge */}
+        <div className="hidden sm:block">
+          <WibClockBadge />
+        </div>
+
         {/* Search trigger button */}
         <button
           onClick={onOpenCommandPalette}
-          className="flex items-center gap-2 px-2.5 py-1.5 bg-[#f0ede4] hover:bg-[#e7e3da] text-stone-600 rounded-lg text-xs font-medium border border-[#ded8cc] transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1.5 bg-[#f0ede4] hover:bg-[#e7e3da] text-stone-700 rounded-lg text-xs font-medium border border-[#ded8cc] transition-colors cursor-pointer"
+          title="Search anything (⌘K)"
         >
           <Search className="w-3.5 h-3.5 text-stone-500" />
           <span className="hidden md:inline">{t.header.quickSearch}</span>
@@ -91,18 +97,10 @@ export const Header: React.FC<{
           </kbd>
         </button>
 
-        {/* Business Date Tracker Badge */}
-        <div className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#eef5f1] border border-emerald-200 text-emerald-900 text-xs font-mono">
-          <Clock className="w-3.5 h-3.5 text-emerald-700" />
-          <span>24 Aug 2026</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-          <span className="text-[10px] uppercase font-bold text-emerald-800">{t.header.morningShift}</span>
-        </div>
-
         {/* Action: New Reservation */}
         <button
           onClick={onOpenNewBookingModal}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#27523d] hover:bg-[#1d4030] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors cursor-pointer"
+          className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 bg-[#27523d] hover:bg-[#1d4030] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">{t.header.newBooking}</span>
@@ -113,20 +111,20 @@ export const Header: React.FC<{
           onClick={() => setActiveView("ai-intelligence")}
           className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg border transition-colors cursor-pointer ${
             activeView === "ai-intelligence"
-              ? "bg-emerald-900 text-white border-emerald-900"
+              ? "bg-emerald-900 text-white border-emerald-900 shadow-xs"
               : "bg-white text-emerald-900 border-emerald-300 hover:bg-emerald-50"
           }`}
           title="Open Gemini AI Intelligence Hub"
         >
           <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span className="hidden md:inline">{t.header.aiHub}</span>
+          <span className="hidden lg:inline">{t.header.aiHub}</span>
         </button>
 
         {/* Night Audit 1-Click Trigger */}
         <button
           onClick={runNightAudit}
           className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-medium rounded-lg border border-stone-300 transition-colors cursor-pointer"
-          title="Run Automated Night Audit Simulation"
+          title="Run Automated Night Audit Simulation (WIB System)"
         >
           <Moon className="w-3.5 h-3.5 text-stone-600" />
           <span className="text-[11px]">{t.header.nightAudit}</span>
@@ -144,15 +142,15 @@ export const Header: React.FC<{
           >
             <Bell className="w-4 h-4" />
             {(criticalEng.length > 0 || urgentHk.length > 0) && (
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white animate-pulse"></span>
             )}
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-[#e4ded4] p-3 text-xs z-50 animate-in fade-in zoom-in-95">
+            <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-[#e4ded4] p-3 text-xs z-50 animate-in fade-in zoom-in-95">
               <div className="flex items-center justify-between pb-2 border-b border-stone-100 mb-2">
-                <span className="font-semibold text-stone-900">{t.header.operationalAlerts}</span>
-                <span className="text-[10px] text-stone-600 font-mono">{t.liveSync}</span>
+                <span className="font-bold text-stone-900">{t.header.operationalAlerts}</span>
+                <span className="text-[10px] text-stone-500 font-mono">{t.liveSync}</span>
               </div>
               <div className="space-y-2">
                 {criticalEng.map(w => (
