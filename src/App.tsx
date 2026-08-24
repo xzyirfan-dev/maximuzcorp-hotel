@@ -79,7 +79,7 @@ const MainContent: React.FC = () => {
         />
 
         {/* View Workspace Container */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 w-full max-w-[1750px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
           {renderActiveView()}
         </main>
       </div>

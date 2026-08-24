@@ -43,6 +43,12 @@ export const translations = {
     noResultsFound: "Tidak ditemukan hasil untuk",
 
     // Navigation Items
+    navGroups: {
+      core: "Operasional Kamar & Tamu",
+      services: "Layanan, F&B & Fasilitas",
+      management: "Manajemen & Keuangan",
+      system: "Kecerdasan & Konfigurasi"
+    },
     nav: {
       operations: "Operasional Hotel",
       dashboard: "Ringkasan Eksekutif",
@@ -251,6 +257,12 @@ export const translations = {
     noResultsFound: "No matching results found for",
 
     // Navigation Items
+    navGroups: {
+      core: "Rooms & Front Office",
+      services: "Services, Dining & Facilities",
+      management: "Management & Finance",
+      system: "Intelligence & System"
+    },
     nav: {
       operations: "Hotel Operations",
       dashboard: "Executive Overview",

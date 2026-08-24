@@ -22,12 +22,10 @@ export const Header: React.FC<{
   const { 
     activeView, 
     setActiveView, 
-    activeRoleProfile,
     runNightAudit,
     workOrders,
     housekeepingTasks,
     t,
-    language
   } = useHotel();
 
   const [showNotifications, setShowNotifications] = useState(false);
@@ -52,32 +50,35 @@ export const Header: React.FC<{
   const urgentHk = housekeepingTasks.filter(t => t.priority === "URGENT" && t.status !== "COMPLETED" && t.status !== "VERIFIED");
 
   return (
-    <header className="sticky top-0 z-30 bg-[#fcfbf9]/95 backdrop-blur-md border-b border-[#e8e4dc] px-3 sm:px-6 py-2.5 flex items-center justify-between">
+    <header className="sticky top-0 z-30 bg-[#0d1f17]/95 backdrop-blur-md border-b border-[#1a382b] px-4 sm:px-6 py-2.5 flex items-center justify-between text-stone-100 shadow-md">
+      {/* Seamless Top Gold Accent Line */}
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#f1d279] via-[#c5a059] to-transparent opacity-90" />
+
       {/* Left: Breadcrumbs & Mobile Trigger */}
       <div className="flex items-center gap-2 sm:gap-3">
         <button
           onClick={onOpenMobileMenu}
-          className="p-1.5 rounded-lg hover:bg-stone-200/60 lg:hidden text-stone-700 cursor-pointer"
+          className="p-1.5 rounded-lg hover:bg-[#183629] lg:hidden text-emerald-200 cursor-pointer"
           aria-label="Open Mobile Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div>
-          <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-stone-600 font-medium">
-            <span className="flex items-center gap-1 text-stone-700 font-semibold truncate max-w-[140px] sm:max-w-none">
-              <Building className="w-3.5 h-3.5 text-[#27523d] shrink-0" /> Maximuz Grand Heritage
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-emerald-200/80 font-medium">
+            <span className="flex items-center gap-1 text-[#f5dc8c] font-bold tracking-wide truncate max-w-[150px] sm:max-w-none">
+              <Building className="w-3.5 h-3.5 text-[#f1d279] shrink-0" /> Maximuz Grand Heritage
             </span>
-            <span className="text-stone-400">/</span>
-            <span className="text-stone-900 font-bold truncate max-w-[120px] sm:max-w-none">{currentInfo.title}</span>
+            <span className="text-[#c5a059]/60">/</span>
+            <span className="text-white font-bold tracking-tight truncate max-w-[130px] sm:max-w-none">{currentInfo.title}</span>
           </div>
-          <p className="text-[11px] text-stone-500 hidden md:block truncate max-w-md">
+          <p className="text-[11px] text-emerald-300/70 hidden md:block truncate max-w-md">
             {currentInfo.subtitle}
           </p>
         </div>
       </div>
 
-      {/* Right Actions */}
+      {/* Right Actions - Seamless Dark Luxury Cockpit */}
       <div className="flex items-center gap-1.5 sm:gap-2.5">
         {/* Real-time Indonesian WIB Clock & Shift Tracker Badge */}
         <div className="hidden sm:block">
@@ -87,12 +88,12 @@ export const Header: React.FC<{
         {/* Search trigger button */}
         <button
           onClick={onOpenCommandPalette}
-          className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1.5 bg-[#f0ede4] hover:bg-[#e7e3da] text-stone-700 rounded-lg text-xs font-medium border border-[#ded8cc] transition-colors cursor-pointer"
-          title="Search anything (⌘K)"
+          className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 bg-[#142c20] hover:bg-[#1a382b] text-emerald-100 rounded-xl text-xs font-medium border border-[#234937] hover:border-[#c5a059]/50 transition-all cursor-pointer shadow-xs"
+          title="Pencarian Cepat (⌘K)"
         >
-          <Search className="w-3.5 h-3.5 text-stone-500" />
+          <Search className="w-3.5 h-3.5 text-[#f5dc8c]" />
           <span className="hidden md:inline">{t.header.quickSearch}</span>
-          <kbd className="hidden sm:inline font-mono text-[10px] bg-white px-1.5 py-0.5 rounded border border-stone-300 text-stone-500">
+          <kbd className="hidden sm:inline font-mono text-[10px] bg-[#0c1d15] px-1.5 py-0.5 rounded border border-[#234937] text-emerald-300">
             ⌘K
           </kbd>
         </button>
@@ -100,33 +101,33 @@ export const Header: React.FC<{
         {/* Action: New Reservation */}
         <button
           onClick={onOpenNewBookingModal}
-          className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 bg-[#27523d] hover:bg-[#1d4030] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors cursor-pointer"
+          className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#f1d279] to-[#c5a059] hover:from-[#f5dc8c] hover:to-[#d4af37] text-stone-950 text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
         >
-          <Plus className="w-3.5 h-3.5" />
+          <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
           <span className="hidden sm:inline">{t.header.newBooking}</span>
         </button>
 
         {/* Quick AI Hub Shortcut */}
         <button
           onClick={() => setActiveView("ai-intelligence")}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg border transition-colors cursor-pointer ${
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl border transition-all cursor-pointer ${
             activeView === "ai-intelligence"
-              ? "bg-emerald-900 text-white border-emerald-900 shadow-xs"
-              : "bg-white text-emerald-900 border-emerald-300 hover:bg-emerald-50"
+              ? "bg-[#1d4130] text-white border-[#f1d279] shadow-xs"
+              : "bg-[#142c20] text-emerald-200 border-[#234937] hover:bg-[#1a382b] hover:border-[#c5a059]/40"
           }`}
-          title="Open Gemini AI Intelligence Hub"
+          title="Buka Pusat Kecerdasan AI Maximuz"
         >
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+          <Sparkles className="w-3.5 h-3.5 text-[#f1d279]" />
           <span className="hidden lg:inline">{t.header.aiHub}</span>
         </button>
 
         {/* Night Audit 1-Click Trigger */}
         <button
           onClick={runNightAudit}
-          className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-medium rounded-lg border border-stone-300 transition-colors cursor-pointer"
-          title="Run Automated Night Audit Simulation (WIB System)"
+          className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 bg-[#142c20] hover:bg-[#1a382b] text-emerald-200 text-xs font-medium rounded-xl border border-[#234937] hover:border-[#c5a059]/40 transition-colors cursor-pointer"
+          title="Jalankan Simulasi Audit Malam (WIB System)"
         >
-          <Moon className="w-3.5 h-3.5 text-stone-600" />
+          <Moon className="w-3.5 h-3.5 text-emerald-400" />
           <span className="text-[11px]">{t.header.nightAudit}</span>
         </button>
 
@@ -137,45 +138,48 @@ export const Header: React.FC<{
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative p-2 rounded-lg text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition-colors cursor-pointer"
-            aria-label="Notifications"
+            className="relative p-2 rounded-xl text-emerald-200 hover:bg-[#183629] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#234937]"
+            aria-label="Notifikasi Operasional"
           >
             <Bell className="w-4 h-4" />
             {(criticalEng.length > 0 || urgentHk.length > 0) && (
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white animate-pulse"></span>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#0d1f17] animate-pulse"></span>
             )}
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-[#e4ded4] p-3 text-xs z-50 animate-in fade-in zoom-in-95">
-              <div className="flex items-center justify-between pb-2 border-b border-stone-100 mb-2">
-                <span className="font-bold text-stone-900">{t.header.operationalAlerts}</span>
-                <span className="text-[10px] text-stone-500 font-mono">{t.liveSync}</span>
+            <div className="absolute right-0 mt-2 w-80 bg-[#10241b] rounded-2xl shadow-2xl border border-[#234937] p-3 text-xs z-50 animate-in fade-in zoom-in-95 text-stone-200">
+              <div className="flex items-center justify-between pb-2 border-b border-[#1e3c2e] mb-2">
+                <span className="font-bold text-white flex items-center gap-1.5">
+                  <Bell className="w-3.5 h-3.5 text-[#f1d279]" />
+                  {t.header.operationalAlerts}
+                </span>
+                <span className="text-[10px] text-emerald-400 font-mono">{t.liveSync}</span>
               </div>
               <div className="space-y-2">
                 {criticalEng.map(w => (
-                  <div key={w.id} className="p-2 rounded-lg bg-rose-50 border border-rose-100 flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <div key={w.id} className="p-2.5 rounded-xl bg-rose-950/60 border border-rose-800/60 flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-rose-900">{w.title}</p>
-                      <p className="text-[11px] text-rose-700">{w.location} • {t.header.assignedTo} {w.assignedTechnician}</p>
+                      <p className="font-bold text-rose-200">{w.title}</p>
+                      <p className="text-[11px] text-rose-300/80">{w.location} • {t.header.assignedTo} {w.assignedTechnician}</p>
                     </div>
                   </div>
                 ))}
                 {urgentHk.map(tTask => (
-                  <div key={tTask.id} className="p-2 rounded-lg bg-amber-50 border border-amber-100 flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div key={tTask.id} className="p-2.5 rounded-xl bg-amber-950/60 border border-amber-800/60 flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-amber-900">{t.common.room} {tTask.roomNumber} - {t.header.vipTurndown}</p>
-                      <p className="text-[11px] text-amber-700">{tTask.notes}</p>
+                      <p className="font-bold text-amber-200">{t.common.room} {tTask.roomNumber} - {t.header.vipTurndown}</p>
+                      <p className="text-[11px] text-amber-300/80">{tTask.notes}</p>
                     </div>
                   </div>
                 ))}
-                <div className="p-2 rounded-lg bg-emerald-50 border border-emerald-100 flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-800/60 flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-emerald-900">{t.header.otaSyncActive}</p>
-                    <p className="text-[11px] text-emerald-700">{t.header.otaSyncDesc}</p>
+                    <p className="font-bold text-emerald-200">{t.header.otaSyncActive}</p>
+                    <p className="text-[11px] text-emerald-300/80">{t.header.otaSyncDesc}</p>
                   </div>
                 </div>
               </div>
@@ -186,4 +190,3 @@ export const Header: React.FC<{
     </header>
   );
 };
-
