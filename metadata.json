@@ -1,0 +1,6 @@
+{
+  "name": "Maximuz Hotel Management System",
+  "description": "Enterprise Property Management System (PMS) and Hotel ERP featuring multi-department coordination, tape chart room rack, guest CRM, revenue management, and AI operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
